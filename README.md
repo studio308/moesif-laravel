@@ -33,7 +33,7 @@ JonnyPickett\MoesifLaravel\ServiceProvider::class,
 
 You will need to provide your Moesif Application ID in order to get this working.
 
-You can find your Application ID from the [_Moesif Dashboard_](https://www.moesif.com/) -> _Top Right Menu_ -> _App Setup_
+You can find your Application ID from the [_Moesif Dashboard_](https://www.moesif.com/) -> _Top Right Menu_ -> _Installation_
 
 If you don't need to change any other config values, you can get away with just setting the appropriate env variable. The necessary env variable for the Application ID is:
 
