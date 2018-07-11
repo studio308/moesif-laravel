@@ -50,6 +50,9 @@ return array(
     */
 
     'maskRequestBody' => function ($body) {
+        if (isset($body['password'])) {
+            $body['password'] = str_repeat('*', 18);
+        }
         return $body;
     },
 

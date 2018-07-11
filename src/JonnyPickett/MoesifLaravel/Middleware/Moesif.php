@@ -3,6 +3,7 @@
 use Config;
 use DateTime;
 use DateTimeZone;
+use Input;
 use JonnyPickett\MoesifLaravel\Sender\MoesifApi;
 use Log;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -96,7 +97,7 @@ class Moesif implements HttpKernelInterface
         }
         $requestContent = $request->getContent();
         if (!is_null($requestContent)) {
-            $requestBody = json_decode($requestContent, true);
+            $requestBody = Input::all();
             if (is_null($requestBody)) {
                 if ($debug) {
                     Log::info('[Moesif] : request body not be empty and not json, base 64 encode');
