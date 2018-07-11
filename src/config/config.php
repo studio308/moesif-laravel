@@ -160,5 +160,5 @@ return array(
     |
     */
 
-    'debug' => true,
+    'debug' => getEnv('MOESIF_DEBUG', false),
 );
