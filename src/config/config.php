@@ -23,7 +23,8 @@ return array(
     */
 
     'skip' => function ($request, $response) {
-        return false;
+        $host = explode('.', $request->server('HTTP_HOST'));
+        return $host[0] != 'api';
     },
 
     /*
@@ -88,12 +89,7 @@ return array(
     */
 
     'identifyUserId' => function ($request, $response) {
-        if (is_null($request->user())) {
-            return null;
-        } else {
-            $user = $request->user();
-            return $user['id'];
-        }
+        return null;
     },
 
     /*

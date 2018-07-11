@@ -73,17 +73,17 @@ class Moesif implements HttpKernelInterface
                 return $response;
             }
         }
-        if (is_null($applicationId)) {
-            throw new Exception('Moesif application_id is missing. Please provide application_id in package config file.');
+        if (!$applicationId) {
+            throw new \Exception('Moesif application_id is missing. Please provide application_id in package config file.');
         }
         $requestData = [
             'time' => $startDateTime->format('Y-m-d\TH:i:s.uP'),
             'verb' => $request->method(),
             'uri' => $request->fullUrl(),
-            'ip_address' => $request->ip()
+            'ip_address' => $request->ip(),
         ];
         if (!is_null($apiVersion)) {
-            $requestData['api_version'] = $apiVersion;
+            $requestData['api_version'] = $apiVersion($request, $response);
         }
         $requestHeaders = [];
         foreach ($request->headers->keys() as $key) {
@@ -117,11 +117,11 @@ class Moesif implements HttpKernelInterface
         $endDateTime->setTimezone(new DateTimeZone("UTC"));
         $responseData = [
             'time' => $endDateTime->format('Y-m-d\TH:i:s.uP'),
-            'status' => $response->status()
+            'status' => $response->getStatusCode(),
         ];
-        $responseContent = $response->content();
+        $responseContent = $response->getContent();
         if (!is_null($responseContent)) {
-            $jsonBody = json_decode($response->content(), true);
+            $jsonBody = json_decode($response->getContent(), true);
             if (!is_null($jsonBody)) {
                 if (!is_null($maskResponseBody)) {
                     $responseData['body'] = $maskResponseBody($jsonBody);
@@ -146,13 +146,10 @@ class Moesif implements HttpKernelInterface
         }
         $data = [
             'request' => $requestData,
-            'response' => $responseData
+            'response' => $responseData,
         ];
-        $user = $request->user();
         if (!is_null($identifyUserId)) {
             $data['user_id'] = $this->ensureString($identifyUserId($request, $response));
-        } elseif (!is_null($user)) {
-            $data['user_id'] = $this->ensureString($user['id']);
         }
         if (!is_null($identifySessionId)) {
             $data['session_token'] = $this->ensureString($identifySessionId($request, $response));
