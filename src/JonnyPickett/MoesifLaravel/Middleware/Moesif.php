@@ -62,7 +62,7 @@ class Moesif implements HttpKernelInterface
         $getMetadata = Config::get('moesif::config.getMetadata');
         $skip = Config::get('moesif::config.skip');
         $debug = Config::get('moesif::config.debug');
-        $sampling_percentage = config('moesif.samplingPercentage');
+        $sampling_percentage = config('moesif.samplingPercentage') ?: 100;
 
         if (!is_numeric($sampling_percentage)) {
             throw new Exception('Sampling Percentage should be a number.');
