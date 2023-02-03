@@ -8,47 +8,31 @@ use Orchestra\Testbench\TestCase;
 abstract class MoesifLaravelTestCase extends TestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->app['path.base'] = __DIR__ . '/../../../../src';
 
         $this->modifyConfiguration($this->app);
-        $this->prepareRoutes();
     }
 
     /**
      * @return array
      */
-    protected function getPackageProviders()
+    protected function getPackageProviders($app)
     {
-        return ['JonnyPickett\MoesifLaravel\ServiceProvider'];
+        return [
+            'JonnyPickett\MoesifLaravel\ServiceProvider'
+        ];
     }
 
     /**
      * @return array
      */
-    protected function getPackageAliases()
+    protected function getPackageAliases($app)
     {
         return [];
-    }
-
-    /**
-    * Define environment setup.
-    *
-    * @param  \Illuminate\Foundation\Application  $app
-    * @return void
-    */
-    protected function getEnvironmentSetUp($app)
-    {
-        // Setup default database to use sqlite :memory:
-        $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
-          'driver'   => 'sqlite',
-          'database' => ':memory:',
-          'prefix'   => '',
-        ]);
     }
 
     /**
@@ -61,10 +45,10 @@ abstract class MoesifLaravelTestCase extends TestCase
     /**
      * Prepare routes.
      */
-    protected function prepareRoutes()
+    protected function defineRoutes($router)
     {
-        $this->app['router']->get('test', [function () {
+        $router->get('test', [function () {
             return json_encode(['message' => 'testing']);
-        }]);
+        }])->middleware('moesif');
     }
 }
