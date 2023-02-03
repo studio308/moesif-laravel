@@ -29,7 +29,7 @@ class MoesifLaravelTest extends MoesifLaravelTestCase
     {
         $now = Carbon::now();
         Carbon::setTestNow($now);
-        $this->app['config']->set('moesif.application_id', 'test_id');
+        $this->app['config']->set('moesif.applicationId', 'test_id');
 
         $expectedRequest = new Request();
         $expectedResponse = new Response();

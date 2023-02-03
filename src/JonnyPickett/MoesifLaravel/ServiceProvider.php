@@ -19,7 +19,7 @@ class ServiceProvider extends BaseServiceProvider
         ]);
 
         $this->app->singleton(MoesifApi::class, function () {
-            return MoesifApi::getInstance(config('moesif.application_id', 'unknown'), [
+            return MoesifApi::getInstance(config('moesif.applicationId', 'unknown'), [
                 'fork' => true,
                 'debug' => config('moesif.debug', false),
             ]);
