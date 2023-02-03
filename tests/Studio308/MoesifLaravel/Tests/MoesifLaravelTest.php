@@ -1,10 +1,10 @@
-<?php namespace JonnyPickett\MoesifLaravel\Tests;
+<?php namespace Studio308\MoesifLaravel\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use JonnyPickett\MoesifLaravel\Middleware\Moesif;
-use JonnyPickett\MoesifLaravel\Sender\MoesifApi;
+use Studio308\MoesifLaravel\Middleware\Moesif;
+use Studio308\MoesifLaravel\Sender\MoesifApi;
 
 class MoesifLaravelTest extends MoesifLaravelTestCase
 {

@@ -1,12 +1,12 @@
 {
-    "name": "jonnypickett/moesif-laravel",
+    "name": "studio308/moesif-laravel",
     "description": "Moesif SDK for Laravel 8.*",
     "keywords": ["moesif", "laravel"],
     "license": "MIT",
     "authors": [
         {
             "name": "Jonny Pickett",
-            "email": "jonny@jonnypickett.com"
+            "email": "jonny@studio308.co"
         }
     ],
     "require": {
@@ -22,12 +22,12 @@
     },
     "autoload": {
         "psr-0": {
-            "JonnyPickett\\MoesifLaravel\\": "src/"
+            "Studio308\\MoesifLaravel\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "JonnyPickett\\MoesifLaravel\\Tests": "tests/"
+            "Studio308\\MoesifLaravel\\Tests": "tests/"
         }
     },
     "minimum-stability": "stable",
@@ -39,7 +39,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "JonnyPickett\\MoesifLaravel\\ServiceProvider"
+                "Studio308\\MoesifLaravel\\ServiceProvider"
             ]
         }
     }

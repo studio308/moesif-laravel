@@ -20,7 +20,7 @@ Currently only compatible with Laravel 8.*
 Via Composer
 
 ``` bash
-$ composer require jonnypickett/moesif-laravel
+$ composer require studio308/moesif-laravel
 ```
 
 Laravel uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
@@ -45,7 +45,7 @@ MOESIF_DEBUG
 Some sensible defaults are set for you in the config file, but if you need to modify it, you can modify it to fit your needs after publishing it with the command below.
 
 ```php
-php artisan vendor:publish jonnypickett/moesif-laravel
+php artisan vendor:publish studio308/moesif-laravel
 ```
 
 (DO NOT PUT YOUR APPLICATION ID IN THE CONFIG FILE. USE THE ENV VARIABLE.)
@@ -280,11 +280,11 @@ Optional, If true, will print debug messages using Illuminate\Support\Facades\Lo
 To view more more documentation on integration options, please visit __[the Integration Options Documentation](https://www.moesif.com/docs/getting-started/integration-options/).__
 
 
-[ico-version]: https://img.shields.io/packagist/v/jonnypickett/moesif-laravel.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/studio308/moesif-laravel.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/jonnypickett/moesif-laravel.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/studio308/moesif-laravel.svg?style=flat-square
 [ico-built-for]: https://img.shields.io/badge/built%20for-laravel-blue.svg
 
-[link-packagist]: https://packagist.org/packages/jonnypickett/moesif-laravel
-[link-downloads]: https://packagist.org/packages/jonnypickett/moesif-laravel
+[link-packagist]: https://packagist.org/packages/studio308/moesif-laravel
+[link-downloads]: https://packagist.org/packages/studio308/moesif-laravel
 [link-built-for]: http://laravel.com

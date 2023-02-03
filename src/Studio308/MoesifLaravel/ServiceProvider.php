@@ -1,9 +1,9 @@
-<?php namespace JonnyPickett\MoesifLaravel;
+<?php namespace Studio308\MoesifLaravel;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use JonnyPickett\MoesifLaravel\Middleware\Moesif;
-use JonnyPickett\MoesifLaravel\Sender\MoesifApi;
+use Studio308\MoesifLaravel\Middleware\Moesif;
+use Studio308\MoesifLaravel\Sender\MoesifApi;
 
 class ServiceProvider extends BaseServiceProvider
 {

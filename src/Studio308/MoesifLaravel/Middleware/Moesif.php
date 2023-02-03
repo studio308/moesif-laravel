@@ -1,10 +1,10 @@
-<?php namespace JonnyPickett\MoesifLaravel\Middleware;
+<?php namespace Studio308\MoesifLaravel\Middleware;
 
 use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use JonnyPickett\MoesifLaravel\Sender\MoesifApi;
+use Studio308\MoesifLaravel\Sender\MoesifApi;
 
 class Moesif
 {

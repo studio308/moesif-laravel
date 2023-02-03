@@ -1,4 +1,4 @@
-<?php namespace JonnyPickett\MoesifLaravel\Tests;
+<?php namespace Studio308\MoesifLaravel\Tests;
 
 use Orchestra\Testbench\TestCase;
 
@@ -23,7 +23,7 @@ abstract class MoesifLaravelTestCase extends TestCase
     protected function getPackageProviders($app)
     {
         return [
-            'JonnyPickett\MoesifLaravel\ServiceProvider'
+            'Studio308\MoesifLaravel\ServiceProvider'
         ];
     }
 

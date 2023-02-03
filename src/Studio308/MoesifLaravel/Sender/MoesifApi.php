@@ -1,7 +1,7 @@
-<?php namespace JonnyPickett\MoesifLaravel\Sender;
+<?php namespace Studio308\MoesifLaravel\Sender;
 
-use JonnyPickett\MoesifLaravel\Sender\BaseClass;
-use JonnyPickett\MoesifLaravel\Sender\SendTaskProducer;
+use Studio308\MoesifLaravel\Sender\BaseClass;
+use Studio308\MoesifLaravel\Sender\SendTaskProducer;
 
 class MoesifApi extends BaseClass
 {

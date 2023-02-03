@@ -1,6 +1,6 @@
-<?php namespace JonnyPickett\MoesifLaravel\Sender;
+<?php namespace Studio308\MoesifLaravel\Sender;
 
-use JonnyPickett\MoesifLaravel\Sender\SendTaskConsumer;
+use Studio308\MoesifLaravel\Sender\SendTaskConsumer;
 
 /**
  * Consumes messages and sends them to a host/endpoint using cURL

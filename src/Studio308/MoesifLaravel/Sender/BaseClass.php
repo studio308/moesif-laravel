@@ -1,4 +1,4 @@
-<?php namespace JonnyPickett\MoesifLaravel\Sender;
+<?php namespace Studio308\MoesifLaravel\Sender;
 
 use Illuminate\Support\Facades\Log;
 
