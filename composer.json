@@ -1,6 +1,8 @@
 {
     "name": "jonnypickett/moesif-laravel",
     "description": "Moesif SDK for Laravel 8.*",
+    "keywords": ["moesif", "laravel"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Jonny Pickett",
