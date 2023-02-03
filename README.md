@@ -45,10 +45,38 @@ MOESIF_DEBUG
 Some sensible defaults are set for you in the config file, but if you need to modify it, you can modify it to fit your needs after publishing it with the command below.
 
 ```php
-php artisan vendor:publish studio308/moesif-laravel
+php artisan vendor:publish
 ```
 
 (DO NOT PUT YOUR APPLICATION ID IN THE CONFIG FILE. USE THE ENV VARIABLE.)
+
+## Usage
+
+Add the `moesif` middleware to the `api` middleware group in your `Http/Kernel`
+
+```php
+    /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [
+        'web' => [
+            ...
+        ],
+
+        'api' => [
+            ...
+            'moesif',
+            ...
+        ],
+    ];
+
+```
+
+## Configuration Documentation
+
+Below is an example `config/moesif.php` configuration file.
 
 ```php
 <?php
@@ -90,6 +118,9 @@ return array(
     */
 
     'maskRequestHeaders' => function ($headers) {
+        if (isset($headers['authorization'])) {
+            $headers['authorization'] = str_repeat('*', 18);
+        }
         return $headers;
     },
 
@@ -132,6 +163,9 @@ return array(
     */
 
     'maskResponseBody' => function ($body) {
+        if (isset($body['token'])) {
+            $body['token'] = str_repeat('*', 18);
+        }
         return $body;
     },
 
@@ -227,6 +261,10 @@ Required, a string that identifies your application.
 #### identifyUserId
 Type: `($request, $response) => String`
 Optional, a function that takes a $request and $response and return a string for userId.
+
+#### identifyCompany
+Type: `($request, $response) => String`
+Optional, a function that takes a $request and $response and return a string for companyId.
 
 #### identifySessionId
 Type: `($request, $response) => String`
