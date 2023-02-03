@@ -5,7 +5,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Software License][ico-license]](LICENSE.md)
 
-Moesif SDK for Laravel 4.2.*
+Moesif SDK for Laravel 8.*
 
 * [Compatibility](#compatibility)
 * [Installation](#installation)
@@ -13,21 +13,17 @@ Moesif SDK for Laravel 4.2.*
 
 ## Compatibility
 
-Currently only compatible with Laravel 4.2.*
+Currently only compatible with Laravel 8.*
 
 ## Installation
 
 Via Composer
 
 ``` bash
-$ composer require jonnypickett/moesif-laravel
+$ composer require studio308/moesif-laravel
 ```
 
-After updating composer, add the ServiceProvider to the `providers` array in `config/app.php`
-
-``` php
-JonnyPickett\MoesifLaravel\ServiceProvider::class,
-```
+Laravel uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
 
 ## Configuration
 
@@ -49,7 +45,7 @@ MOESIF_DEBUG
 Some sensible defaults are set for you in the config file, but if you need to modify it, you can modify it to fit your needs after publishing it with the command below.
 
 ```php
-php artisan config:publish jonnypickett/moesif-laravel
+php artisan vendor:publish studio308/moesif-laravel
 ```
 
 (DO NOT PUT YOUR APPLICATION ID IN THE CONFIG FILE. USE THE ENV VARIABLE.)
@@ -68,7 +64,7 @@ return array(
     |
     */
 
-    'application_id' => getEnv('MOESIF_APPLICATION_ID'),
+    'applicationId' => env('MOESIF_APPLICATION_ID'),
 
     /*
     |--------------------------------------------------------------------------
@@ -217,7 +213,7 @@ return array(
     |
     */
 
-    'debug' => getEnv('MOESIF_DEBUG', false),
+    'debug' => env('MOESIF_DEBUG', false),
     
 );
 ```
@@ -273,7 +269,7 @@ Optional, If true, will print debug messages using Illuminate\Support\Facades\Lo
 
 ## Credits for Moesif Laravel SDK
 
-- All I did was modify __[Moesif's existing Laravel package](https://github.com/Moesif/moesif-laravel)__ to be compatible with Laravel 4.2. All credit for what actually matters should be given to __[Xing Wang](https://github.com/xinghengwang)__.
+- All I did was modify __[Moesif's existing Laravel package](https://github.com/Moesif/moesif-laravel)__ to be compatible with Laravel 8.*. All credit for what actually matters should be given to __[Xing Wang](https://github.com/xinghengwang)__.
 
 ## Additional Tips:
 
@@ -284,13 +280,11 @@ Optional, If true, will print debug messages using Illuminate\Support\Facades\Lo
 To view more more documentation on integration options, please visit __[the Integration Options Documentation](https://www.moesif.com/docs/getting-started/integration-options/).__
 
 
-[ico-version]: https://img.shields.io/packagist/v/jonnypickett/moesif-laravel.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/studio308/moesif-laravel.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/jonnypickett/moesif-laravel.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/studio308/moesif-laravel.svg?style=flat-square
 [ico-built-for]: https://img.shields.io/badge/built%20for-laravel-blue.svg
 
-[link-packagist]: https://packagist.org/packages/jonnypickett/moesif-laravel
-[link-downloads]: https://packagist.org/packages/jonnypickett/moesif-laravel
+[link-packagist]: https://packagist.org/packages/studio308/moesif-laravel
+[link-downloads]: https://packagist.org/packages/studio308/moesif-laravel
 [link-built-for]: http://laravel.com
-[link-cub-php]: https://packagist.org/packages/cub/cub
-[link-cub-widget-docs]: https://github.com/praetoriandigital/cub-docs

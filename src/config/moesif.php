@@ -11,7 +11,7 @@ return array(
     |
     */
 
-    'application_id' => getEnv('MOESIF_APPLICATION_ID'),
+    'applicationId' => env('MOESIF_APPLICATION_ID'),
 
     /*
     |--------------------------------------------------------------------------
@@ -160,5 +160,5 @@ return array(
     |
     */
 
-    'debug' => getEnv('MOESIF_DEBUG', false),
+    'debug' => env('MOESIF_DEBUG', false),
 );

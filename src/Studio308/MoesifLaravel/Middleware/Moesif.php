@@ -1,70 +1,51 @@
-<?php namespace JonnyPickett\MoesifLaravel\Middleware;
+<?php namespace Studio308\MoesifLaravel\Middleware;
 
-use Config;
-use DateTime;
-use DateTimeZone;
-use Input;
-use JonnyPickett\MoesifLaravel\Sender\MoesifApi;
-use Log;
-use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Carbon\Carbon;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Studio308\MoesifLaravel\Sender\MoesifApi;
 
-class Moesif implements HttpKernelInterface
+class Moesif
 {
+    public const DATE_TIME_FORMAT = 'Y-m-d\TH:i:s.uP';
 
     /**
-     * The wrapped kernel implementation.
-     *
-     * @var \Symfony\Component\HttpKernel\HttpKernelInterface
+     * @var MoesifApi
      */
-    protected $app;
+    private $moesifApi;
 
-    /**
-     * Create a new Moesif instance.
-     *
-     * @param  \Symfony\Component\HttpKernel\HttpKernelInterface  $app
-     * @return void
-     */
-    public function __construct(HttpKernelInterface $app)
+    public function __construct(MoesifApi $moesifApi)
     {
-        $this->app = $app;
+        $this->moesifApi = $moesifApi;
     }
 
     /**
-     * Handle the given request and get the response.
+     * Handle an incoming request.
      *
-     * @implements HttpKernelInterface::handle
-     *
-     * @param  \Symfony\Component\HttpFoundation\Request  $request
-     * @param  int   $type
-     * @param  bool  $catch
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  Request  $request
+     * @param  Closure  $next
+     * @return mixed
      */
-    public function handle(SymfonyRequest $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle($request, Closure $next)
     {
         // do action before response
-        $t = microtime(true);
-        $micro = sprintf("%06d", ($t - floor($t)) * 1000000);
-        $startDateTime = new DateTime(date('Y-m-d H:i:s.'.$micro, $t));
-        $startDateTime->setTimezone(new DateTimeZone("UTC"));
+        $start = Carbon::now()->timezone('UTC');
 
         // Handle on passed down request
-        $response = $this->app->handle($request, $type, $catch);
+        $response = $next($request);
 
-        $applicationId = Config::get('moesif::config.application_id');
-        $apiVersion = Config::get('moesif::config.apiVersion');
-        $maskRequestHeaders = Config::get('moesif::config.maskRequestHeaders');
-        $maskRequestBody = Config::get('moesif::config.maskRequestBody');
-        $maskResponseHeaders = Config::get('moesif::config.maskResponseHeaders');
-        $maskResponseBody = Config::get('moesif::config.maskResponseBody');
-        $identifyUserId = Config::get('moesif::config.identifyUserId');
-        $identifySessionId = Config::get('moesif::config.identifySessionId');
-        $getMetadata = Config::get('moesif::config.getMetadata');
-        $skip = Config::get('moesif::config.skip');
-        $debug = Config::get('moesif::config.debug');
-        if (is_null($debug)) {
-            $debug = false;
-        }
+        $apiVersion = config('moesif.apiVersion');
+        $maskRequestHeaders = config('moesif.maskRequestHeaders');
+        $maskRequestBody = config('moesif.maskRequestBody');
+        $maskResponseHeaders = config('moesif.maskResponseHeaders');
+        $maskResponseBody = config('moesif.maskResponseBody');
+        $identifyUserId = config('moesif.identifyUserId');
+        $identifySessionId = config('moesif.identifySessionId');
+        $getMetadata = config('moesif.getMetadata');
+        $skip = config('moesif.skip');
+        $debug = config('moesif.debug', false);
+
         // if skip is defined, invoke skip function.
         if (!is_null($skip)) {
             if ($skip($request, $response)) {
@@ -74,11 +55,9 @@ class Moesif implements HttpKernelInterface
                 return $response;
             }
         }
-        if (!$applicationId) {
-            throw new \Exception('Moesif application_id is missing. Please provide application_id in package config file.');
-        }
+
         $requestData = [
-            'time' => $startDateTime->format('Y-m-d\TH:i:s.uP'),
+            'time' => $start->format(self::DATE_TIME_FORMAT),
             'verb' => $request->method(),
             'uri' => $request->fullUrl(),
             'ip_address' => $request->ip(),
@@ -97,7 +76,7 @@ class Moesif implements HttpKernelInterface
         }
         $requestContent = $request->getContent();
         if (!is_null($requestContent)) {
-            $requestBody = Input::all();
+            $requestBody = $request->input();
             if (is_null($requestBody)) {
                 if ($debug) {
                     Log::info('[Moesif] : request body not be empty and not json, base 64 encode');
@@ -112,12 +91,9 @@ class Moesif implements HttpKernelInterface
                 }
             }
         }
-        $endTime = microTime(true);
-        $micro = sprintf("%06d", ($endTime - floor($endTime)) * 1000000);
-        $endDateTime = new DateTime(date('Y-m-d H:i:s.'.$micro, $endTime));
-        $endDateTime->setTimezone(new DateTimeZone("UTC"));
+        $end = Carbon::now()->timezone('UTC');
         $responseData = [
-            'time' => $endDateTime->format('Y-m-d\TH:i:s.uP'),
+            'time' => $end->format(self::DATE_TIME_FORMAT),
             'status' => $response->getStatusCode(),
         ];
         $responseContent = $response->getContent();
@@ -160,11 +136,8 @@ class Moesif implements HttpKernelInterface
         if (!is_null($getMetadata)) {
             $data['metadata'] = $getMetadata($request, $response);
         }
-        $moesifApi = MoesifApi::getInstance($applicationId, [
-            'fork' => true,
-            'debug' => $debug,
-        ]);
-        $moesifApi->track($data);
+
+        $this->moesifApi->track($data);
 
         return $response;
     }
@@ -174,7 +147,7 @@ class Moesif implements HttpKernelInterface
      *
      * @return string
      */
-    protected function ensureString($item)
+    protected function ensureString($item): ?string
     {
         if (is_null($item)) {
             return $item;

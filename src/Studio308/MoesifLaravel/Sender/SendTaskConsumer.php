@@ -1,6 +1,6 @@
-<?php namespace JonnyPickett\MoesifLaravel\Sender;
+<?php namespace Studio308\MoesifLaravel\Sender;
 
-use JonnyPickett\MoesifLaravel\Sender\BaseClass;
+use Studio308\MoesifLaravel\Sender\BaseClass;
 
 /**
  * Provides some base methods for use by a Consumer implementation
